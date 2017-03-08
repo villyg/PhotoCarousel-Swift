@@ -9,7 +9,7 @@
 import UIKit
 
 class MainController: UIViewController {
-
+    
     
     let image1: UIImage = UIImage.create(fromColor: UIColor.blue)
     let image2: UIImage = UIImage.create(fromColor: UIColor.red)
@@ -28,41 +28,51 @@ class MainController: UIViewController {
     var landscapeConstraints: [NSLayoutConstraint] = []
     var portraitConstraints: [NSLayoutConstraint] = []
     
+    var firstTimeSetup: Bool = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.addSubview(carousel)
-
-        commonConstraints.append(NSLayoutConstraint(item: carousel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0))
-        commonConstraints.append(NSLayoutConstraint(item: carousel, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1.0, constant: 0))
-        commonConstraints.append(NSLayoutConstraint(item: carousel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0))
-        
-        portraitConstraints.append(NSLayoutConstraint(item: carousel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: self.view.bounds.height / 3))
-        
-        landscapeConstraints.append(NSLayoutConstraint(item: carousel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: self.view.bounds.height))
-        
-
-        NSLayoutConstraint.activate(commonConstraints)
         
     }
+    
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
     }
-
+    
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-
-        print(#function)
-        if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass {
         
+        if !firstTimeSetup {
+            
+            commonConstraints.append(NSLayoutConstraint(item: carousel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0))
+            commonConstraints.append(NSLayoutConstraint(item: carousel, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1.0, constant: 0))
+            commonConstraints.append(NSLayoutConstraint(item: carousel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0))
+            
+            portraitConstraints.append(NSLayoutConstraint(item: carousel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: self.view.bounds.height / 3))
+            
+            landscapeConstraints.append(NSLayoutConstraint(item: carousel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: self.view.bounds.height))
+            
+            
+            NSLayoutConstraint.activate(commonConstraints)
+            
+            firstTimeSetup = true
+        
+        }
+        
+        if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass {
+            
+            NSLayoutConstraint.deactivate(landscapeConstraints)
+            NSLayoutConstraint.deactivate(portraitConstraints)
+            
             if traitCollection.verticalSizeClass == .regular {
-                NSLayoutConstraint.deactivate(landscapeConstraints)
+                
                 NSLayoutConstraint.activate(portraitConstraints)
             } else {
-                NSLayoutConstraint.deactivate(portraitConstraints)
                 NSLayoutConstraint.activate(landscapeConstraints)
             }
         }
@@ -70,7 +80,7 @@ class MainController: UIViewController {
     }
     
     
-
+    
     
     
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -80,38 +90,38 @@ class MainController: UIViewController {
             
             if newCollection.verticalSizeClass == .regular {
                 print("regular vertical")
-//                self.view.backgroundColor = UIColor.red
+                //                self.view.backgroundColor = UIColor.red
             } else {
                 print("compact vertical")
-//                self.view.backgroundColor = UIColor.green
+                //                self.view.backgroundColor = UIColor.green
             }
             
         }) { (context) in
-//            self.view.backgroundColor = UIColor.blue
+            //            self.view.backgroundColor = UIColor.blue
         }
         
     }
     
-//
-//
-//
-//    
-//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//        super.viewWillTransition(to: size, with: coordinator)
-//        
-//        
-//        coordinator.animate(alongsideTransition: { (context: UIViewControllerTransitionCoordinatorContext) in
-//            
-//            
-////            self.tableView.endUpdates()
-//            
-//        }) { (context: UIViewControllerTransitionCoordinatorContext) in
-//            
-//            
-//        }
-//        
-//    }
-
-
+    //
+    //
+    //
+    //
+    //    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    //        super.viewWillTransition(to: size, with: coordinator)
+    //
+    //
+    //        coordinator.animate(alongsideTransition: { (context: UIViewControllerTransitionCoordinatorContext) in
+    //
+    //
+    ////            self.tableView.endUpdates()
+    //
+    //        }) { (context: UIViewControllerTransitionCoordinatorContext) in
+    //            
+    //            
+    //        }
+    //        
+    //    }
+    
+    
 }
 
