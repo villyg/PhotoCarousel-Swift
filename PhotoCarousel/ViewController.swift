@@ -34,11 +34,19 @@ class MainController: UIViewController {
         let frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
+//        layout.minimumInteritemSpacing = 0.0
+//        layout.minimumLineSpacing = 0.0
+//        layout.sectionInset = UIEdgeInsets.zero
+//        layout.headerReferenceSize = CGSize.zero
+//        layout.footerReferenceSize = CGSize.zero
+//    
         
         let result = UICollectionView(frame: frame, collectionViewLayout: layout)
         result.backgroundColor = UIColor.darkGray
         result.isPagingEnabled = true
         result.translatesAutoresizingMaskIntoConstraints = false
+//        result.contentInset = UIEdgeInsets.zero
+        
         
         return result
         
