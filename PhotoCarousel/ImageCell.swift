@@ -20,7 +20,7 @@ class ImageCell: UICollectionViewCell {
         imageView = UIImageView()
         contentView.addSubview(imageView)
         backgroundColor = UIColor.yellow
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1.0).isActive = true

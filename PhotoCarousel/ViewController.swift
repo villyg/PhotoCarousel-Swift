@@ -45,6 +45,17 @@ class MainController: UIViewController {
         
     }()
     
+    var tempImageView: UIImageView = {
+    
+        let result = UIImageView()
+        result.contentMode = .scaleAspectFill
+        result.clipsToBounds = true
+        result.translatesAutoresizingMaskIntoConstraints = false
+        result.isHidden = true
+        return result
+        
+    }()
+    
     
     var commonConstraints: [NSLayoutConstraint] = []
     var landscapeConstraints: [NSLayoutConstraint] = []
@@ -62,6 +73,7 @@ class MainController: UIViewController {
         self.collectionView.dataSource = self
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.addSubview(collectionView)
+        self.view.addSubview(tempImageView)
         
     }
     
@@ -75,14 +87,23 @@ class MainController: UIViewController {
         
         if !firstTimeSetup {
             
+            // collection view
             commonConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0))
             commonConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1.0, constant: 0))
             commonConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0))
             
             portraitConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 0.33, constant: 0))
-
+            
             landscapeConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 1.0, constant: 0))
-
+            
+            // temp image view
+            commonConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0))
+            commonConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1.0, constant: 0))
+            commonConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0))
+            
+            portraitConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 0.33, constant: 0))
+            
+            landscapeConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 1.0, constant: 0))
             
             
             NSLayoutConstraint.activate(commonConstraints)
@@ -126,7 +147,10 @@ class MainController: UIViewController {
     
         let indexPath = self.collectionView.indexPathsForVisibleItems[0]
         
-        self.collectionView.alpha = 0.2
+        self.tempImageView.image = self.images[indexPath.row]
+        self.tempImageView.isHidden = false
+        self.collectionView.isHidden = true
+        
         
         coordinator.animate(alongsideTransition: { (context) in
         
@@ -146,7 +170,8 @@ class MainController: UIViewController {
             // Equivalent to placing it in the deprecated method -[didRotateFromInterfaceOrientation:]
             
             
-            self.collectionView.alpha = 1.0
+            self.collectionView.isHidden = false
+            self.tempImageView.isHidden = true
             
         }
         
