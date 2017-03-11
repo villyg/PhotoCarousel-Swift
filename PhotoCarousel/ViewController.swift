@@ -34,18 +34,11 @@ class MainController: UIViewController {
         let frame = CGRect(x: 0, y: 0, width: 0, height: 0)
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-//        layout.minimumInteritemSpacing = 0.0
-//        layout.minimumLineSpacing = 0.0
-//        layout.sectionInset = UIEdgeInsets.zero
-//        layout.headerReferenceSize = CGSize.zero
-//        layout.footerReferenceSize = CGSize.zero
-//    
         
         let result = UICollectionView(frame: frame, collectionViewLayout: layout)
         result.backgroundColor = UIColor.darkGray
         result.isPagingEnabled = true
         result.translatesAutoresizingMaskIntoConstraints = false
-//        result.contentInset = UIEdgeInsets.zero
         
         
         return result
@@ -114,7 +107,7 @@ class MainController: UIViewController {
             }
             
             self.collectionView.collectionViewLayout.invalidateLayout()
-
+            
         }
         
     }
@@ -127,7 +120,14 @@ class MainController: UIViewController {
         super.willTransition(to: newCollection, with: coordinator)
 
         print(#function)
+        
+        // Code here will execute before the rotation begins.
+        // Equivalent to placing it in the deprecated method -[willRotateToInterfaceOrientation:duration:]
     
+        let indexPath = self.collectionView.indexPathsForVisibleItems[0]
+        
+        self.collectionView.alpha = 0.2
+        
         coordinator.animate(alongsideTransition: { (context) in
         
             print("will transition to alongside")
@@ -138,11 +138,16 @@ class MainController: UIViewController {
                 print("compact vertical")
             }
             
+            self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
             
         }) { (context) in
-            
-            print("willTransitionTo: completion")
 
+            // Code here will execute after the rotation has finished.
+            // Equivalent to placing it in the deprecated method -[didRotateFromInterfaceOrientation:]
+            
+            
+            self.collectionView.alpha = 1.0
+            
         }
         
     }
@@ -204,6 +209,14 @@ extension MainController: UICollectionViewDataSource {
 extension MainController: UICollectionViewDelegateFlowLayout {
 
 
+//    func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
+//    
+//        let page = ceil(proposedContentOffset.x / self.collectionView.frame.size.width)
+//        return CGPoint(x: page * (collectionView.bounds.size.width, y: 0)
+//        
+//    }
+    
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         return collectionView.frame.size
