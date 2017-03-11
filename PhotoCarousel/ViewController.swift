@@ -85,15 +85,18 @@ class MainController: UIViewController {
         
         print(#function)
         
-        
         if !firstTimeSetup {
+           
+            var collectionViewHeightMultiplierWhenInPortrait: CGFloat = 0.33
+            if self.traitCollection.userInterfaceIdiom == .pad { collectionViewHeightMultiplierWhenInPortrait = 0.5 }
+            
             
             // collection view
             commonConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0))
             commonConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1.0, constant: 0))
             commonConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0))
             
-            portraitConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 0.33, constant: 0))
+            portraitConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: collectionViewHeightMultiplierWhenInPortrait, constant: 0))
             
             landscapeConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 1.0, constant: 0))
             
@@ -102,7 +105,7 @@ class MainController: UIViewController {
             commonConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1.0, constant: 0))
             commonConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0))
             
-            portraitConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 0.33, constant: 0))
+            portraitConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: collectionViewHeightMultiplierWhenInPortrait, constant: 0))
             
             landscapeConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 1.0, constant: 0))
             
@@ -121,9 +124,10 @@ class MainController: UIViewController {
             NSLayoutConstraint.deactivate(portraitConstraints)
             
             if traitCollection.verticalSizeClass == .regular {
-                
+                self.navigationController?.setNavigationBarHidden(false, animated: true)
                 NSLayoutConstraint.activate(portraitConstraints)
             } else {
+                self.navigationController?.setNavigationBarHidden(true, animated: true)
                 NSLayoutConstraint.activate(landscapeConstraints)
             }
             
@@ -143,13 +147,11 @@ class MainController: UIViewController {
         
         let visiblePage = self.collectionView.contentOffset.x / self.collectionView.bounds.size.width
         
-        let indexPath = self.collectionView.indexPathsForVisibleItems[0]
-        
-        self.tempImageView.image = self.images[indexPath.row]
-        
-        self.tempImageView.isHidden = false
-        
+        self.tempImageView.image = self.images[Int(visiblePage)]
+  
         self.collectionView.isHidden = true
+        self.tempImageView.isHidden = false
+  
 
         coordinator.animate(alongsideTransition: { (context) in
             
@@ -163,15 +165,55 @@ class MainController: UIViewController {
         }) { (context) in
             
             print("after")
-            self.collectionView.isHidden = false
             self.tempImageView.isHidden = true
-
+            self.collectionView.isHidden = false
         }
         
         
     }
     
-
+    
+    
+//    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+//        super.willTransition(to: newCollection, with: coordinator)
+//
+//        print(#function)
+//        
+//        // Code here will execute before the rotation begins.
+//        // Equivalent to placing it in the deprecated method -[willRotateToInterfaceOrientation:duration:]
+//    
+//        let indexPath = self.collectionView.indexPathsForVisibleItems[0]
+//        
+//        self.tempImageView.image = self.images[indexPath.row]
+//        self.tempImageView.isHidden = false
+//        self.collectionView.isHidden = true
+//        
+//        
+//        coordinator.animate(alongsideTransition: { (context) in
+//        
+//            print("will transition to alongside")
+//
+//            if newCollection.verticalSizeClass == .regular {
+//                print("regular vertical")
+//            } else {
+//                print("compact vertical")
+//            }
+//            
+//            self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+//            self.collectionView.collectionViewLayout.invalidateLayout()
+//            
+//        }) { (context) in
+//
+//            // Code here will execute after the rotation has finished.
+//            // Equivalent to placing it in the deprecated method -[didRotateFromInterfaceOrientation:]
+//            
+//            self.collectionView.isHidden = false
+//            self.tempImageView.isHidden = true
+//            
+//        }
+//        
+//    }
+    
     
 }
 
