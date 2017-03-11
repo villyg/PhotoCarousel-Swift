@@ -38,9 +38,5 @@ class ImageCell: UICollectionViewCell {
     }
     
     
-//    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-//        let attributes = super.preferredLayoutAttributesFitting(layoutAttributes)
-//        return attributes
-//    }
     
 }

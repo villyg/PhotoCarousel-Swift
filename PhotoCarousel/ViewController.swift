@@ -169,7 +169,6 @@ class MainController: UIViewController {
             // Code here will execute after the rotation has finished.
             // Equivalent to placing it in the deprecated method -[didRotateFromInterfaceOrientation:]
             
-            
             self.collectionView.isHidden = false
             self.tempImageView.isHidden = true
             
@@ -177,25 +176,6 @@ class MainController: UIViewController {
         
     }
     
-    
-    
-    
-    
-//        override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//            super.viewWillTransition(to: size, with: coordinator)
-//    
-//            print(#function)
-//            
-//            coordinator.animate(alongsideTransition: { (context: UIViewControllerTransitionCoordinatorContext) in
-//    
-//    
-//            }) { (context: UIViewControllerTransitionCoordinatorContext) in
-//                
-//
-//                
-//            }
-//            
-//        }
     
 }
 
@@ -232,14 +212,6 @@ extension MainController: UICollectionViewDataSource {
 
 
 extension MainController: UICollectionViewDelegateFlowLayout {
-
-
-//    func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
-//    
-//        let page = ceil(proposedContentOffset.x / self.collectionView.frame.size.width)
-//        return CGPoint(x: page * (collectionView.bounds.size.width, y: 0)
-//        
-//    }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
