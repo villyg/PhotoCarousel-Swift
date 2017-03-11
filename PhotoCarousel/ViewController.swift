@@ -62,6 +62,7 @@ class MainController: UIViewController {
     var portraitConstraints: [NSLayoutConstraint] = []
     
     var firstTimeSetup: Bool = false
+    var nextTraitCollection = UITraitCollection()
     
     
     
@@ -113,7 +114,6 @@ class MainController: UIViewController {
         }
         
         
-        
         if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass {
         
             
@@ -131,51 +131,47 @@ class MainController: UIViewController {
             
         }
         
+        
     }
     
     
     
-    
-    
-    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.willTransition(to: newCollection, with: coordinator)
-
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
         print(#function)
         
-        // Code here will execute before the rotation begins.
-        // Equivalent to placing it in the deprecated method -[willRotateToInterfaceOrientation:duration:]
-    
+        let visiblePage = self.collectionView.contentOffset.x / self.collectionView.bounds.size.width
+        
         let indexPath = self.collectionView.indexPathsForVisibleItems[0]
         
         self.tempImageView.image = self.images[indexPath.row]
+        
         self.tempImageView.isHidden = false
+        
         self.collectionView.isHidden = true
-        
-        
-        coordinator.animate(alongsideTransition: { (context) in
-        
-            print("will transition to alongside")
 
-            if newCollection.verticalSizeClass == .regular {
-                print("regular vertical")
-            } else {
-                print("compact vertical")
-            }
+        coordinator.animate(alongsideTransition: { (context) in
             
-            self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+            print("during")
+            
+            let newOffset = CGPoint(x: visiblePage * self.collectionView.bounds.size.width, y: self.collectionView.contentOffset.y)
+            self.collectionView.contentOffset = newOffset
+            
+            self.collectionView.collectionViewLayout.invalidateLayout()
             
         }) { (context) in
-
-            // Code here will execute after the rotation has finished.
-            // Equivalent to placing it in the deprecated method -[didRotateFromInterfaceOrientation:]
             
+            print("after")
             self.collectionView.isHidden = false
             self.tempImageView.isHidden = true
-            
+
         }
+        
         
     }
     
+
     
 }
 
@@ -185,7 +181,8 @@ class MainController: UIViewController {
 
 
 extension MainController: UICollectionViewDataSource {
-
+    
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     
