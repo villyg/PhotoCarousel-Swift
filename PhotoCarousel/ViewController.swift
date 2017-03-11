@@ -138,6 +138,7 @@ class MainController: UIViewController {
         
     }
     
+    var visiblePage: CGFloat!
     
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -145,7 +146,7 @@ class MainController: UIViewController {
         
         print(#function)
         
-        let visiblePage = self.collectionView.contentOffset.x / self.collectionView.bounds.size.width
+        visiblePage = self.collectionView.contentOffset.x / self.collectionView.bounds.size.width
         
         self.tempImageView.image = self.images[Int(visiblePage)]
   
@@ -157,8 +158,8 @@ class MainController: UIViewController {
             
             print("during")
             
-            let newOffset = CGPoint(x: visiblePage * self.collectionView.bounds.size.width, y: self.collectionView.contentOffset.y)
-            self.collectionView.contentOffset = newOffset
+//            let newOffset = CGPoint(x: visiblePage * self.collectionView.bounds.size.width, y: self.collectionView.contentOffset.y)
+//            self.collectionView.contentOffset = newOffset
             
             self.collectionView.collectionViewLayout.invalidateLayout()
             
@@ -251,6 +252,15 @@ extension MainController: UICollectionViewDataSource {
 
 
 extension MainController: UICollectionViewDelegateFlowLayout {
+    
+    
+    func collectionView(_ collectionView: UICollectionView, targetContentOffsetForProposedContentOffset proposedContentOffset: CGPoint) -> CGPoint {
+        
+        let newOffset = CGPoint(x: visiblePage * collectionView.bounds.size.width, y: collectionView.contentOffset.y)
+        
+        return newOffset
+        
+    }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
