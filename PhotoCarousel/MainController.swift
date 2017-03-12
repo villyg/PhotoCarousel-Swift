@@ -83,7 +83,7 @@ class MainController: UIViewController {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        print(#function)
+        // same as having the code block in viewDidLoad
         
         if !firstTimeSetup {
            
@@ -91,7 +91,8 @@ class MainController: UIViewController {
             if self.traitCollection.userInterfaceIdiom == .pad { collectionViewHeightMultiplierWhenInPortrait = 0.5 }
             
             
-            // collection view
+            // define collection view common, portrait and landscape constraints
+            
             commonConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0))
             commonConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1.0, constant: 0))
             commonConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0))
@@ -100,7 +101,8 @@ class MainController: UIViewController {
             
             landscapeConstraints.append(NSLayoutConstraint(item: collectionView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 1.0, constant: 0))
             
-            // temp image view
+            // define temp image view common, portrait and landscape constraints
+            
             commonConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0))
             commonConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .top, relatedBy: .equal, toItem: self.topLayoutGuide, attribute: .bottom, multiplier: 1.0, constant: 0))
             commonConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0))
@@ -109,6 +111,7 @@ class MainController: UIViewController {
             
             landscapeConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 1.0, constant: 0))
             
+            // activate common constriants and turn of the first time set up flag.
             
             NSLayoutConstraint.activate(commonConstraints)
             
@@ -124,11 +127,15 @@ class MainController: UIViewController {
             NSLayoutConstraint.deactivate(portraitConstraints)
             
             if traitCollection.verticalSizeClass == .regular {
+                
                 self.navigationController?.setNavigationBarHidden(false, animated: true)
                 NSLayoutConstraint.activate(portraitConstraints)
+                
             } else {
+                
                 self.navigationController?.setNavigationBarHidden(true, animated: true)
                 NSLayoutConstraint.activate(landscapeConstraints)
+            
             }
             
             self.collectionView.collectionViewLayout.invalidateLayout()
@@ -188,11 +195,11 @@ extension MainController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     
         return self.images.count
+        
     }
     
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.reuseIdentifer, for: indexPath) as! ImageCell
         
