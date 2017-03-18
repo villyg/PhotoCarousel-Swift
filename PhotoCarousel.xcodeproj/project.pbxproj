@@ -12,7 +12,6 @@
 		FA98527C1E6EE59E00E51DDB /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98527B1E6EE59E00E51DDB /* MainController.swift */; };
 		FA9852811E6EE59E00E51DDB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA9852801E6EE59E00E51DDB /* Assets.xcassets */; };
 		FA9852841E6EE59E00E51DDB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA9852821E6EE59E00E51DDB /* LaunchScreen.storyboard */; };
-		FA98528C1E6EE68300E51DDB /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA98528B1E6EE68300E51DDB /* UIImageExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +22,6 @@
 		FA9852801E6EE59E00E51DDB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA9852831E6EE59E00E51DDB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA9852851E6EE59E00E51DDB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FA98528B1E6EE68300E51DDB /* UIImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +58,6 @@
 				FA9852801E6EE59E00E51DDB /* Assets.xcassets */,
 				FA9852851E6EE59E00E51DDB /* Info.plist */,
 				FA9852821E6EE59E00E51DDB /* LaunchScreen.storyboard */,
-				FA98528B1E6EE68300E51DDB /* UIImageExtensions.swift */,
 				FA98527B1E6EE59E00E51DDB /* MainController.swift */,
 				954B336E1E70B71F00BEDD4D /* ImageCell.swift */,
 			);
@@ -139,7 +136,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA98528C1E6EE68300E51DDB /* UIImageExtensions.swift in Sources */,
 				954B336F1E70B71F00BEDD4D /* ImageCell.swift in Sources */,
 				FA98527C1E6EE59E00E51DDB /* MainController.swift in Sources */,
 				FA98527A1E6EE59E00E51DDB /* AppDelegate.swift in Sources */,
