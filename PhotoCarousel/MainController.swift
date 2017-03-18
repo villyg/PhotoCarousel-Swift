@@ -61,10 +61,6 @@ class MainController: UIViewController {
     var landscapeConstraints: [NSLayoutConstraint] = []
     var portraitConstraints: [NSLayoutConstraint] = []
     
-    var firstTimeSetup: Bool = false
-    var nextTraitCollection = UITraitCollection()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,7 +81,7 @@ class MainController: UIViewController {
         
         // same as having the code block in viewDidLoad
         
-        if !firstTimeSetup {
+        if commonConstraints.isEmpty {
            
             var collectionViewHeightMultiplierWhenInPortrait: CGFloat = 0.33
             if self.traitCollection.userInterfaceIdiom == .pad { collectionViewHeightMultiplierWhenInPortrait = 0.5 }
@@ -111,11 +107,9 @@ class MainController: UIViewController {
             
             landscapeConstraints.append(NSLayoutConstraint(item: tempImageView, attribute: .height, relatedBy: .equal, toItem: self.view, attribute: .height, multiplier: 1.0, constant: 0))
             
-            // activate common constriants and turn of the first time set up flag.
+            // activate common constriants
             
             NSLayoutConstraint.activate(commonConstraints)
-            
-            firstTimeSetup = true
         
         }
         
